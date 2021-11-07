@@ -3,7 +3,7 @@
 //strictモード（厳格モード）に設定　エラーチェックが厳しくなるらしい
 'use strict';
 
-//kawa:定数（書き換えられたくない変数）を宣言
+//kawa:定数（書き換えられたくない変数）を宣言　※テスト
 //kawa:外部モジュールを読み込む　※const 変数 = require( モジュール名 );　が構文らしい
 //kawa:LINE提供の外部モジュールを読み込む　これでLineのAPIを呼び出すことができるようになると思われる
 const line = require('@line/bot-sdk');
