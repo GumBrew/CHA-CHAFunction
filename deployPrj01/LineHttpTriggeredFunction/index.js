@@ -3,7 +3,7 @@
 //strictモード（厳格モード）に設定　エラーチェックが厳しくなるらしい
 'use strict';
 
-//kawa:定数（書き換えられたくない変数）を宣言　※テスト
+//kawa:定数（書き換えられたくない変数）を宣言　※CHACHA
 //kawa:外部モジュールを読み込む　※const 変数 = require( モジュール名 );　が構文らしい
 //kawa:LINE提供の外部モジュールを読み込む　これでLineのAPIを呼び出すことができるようになると思われる
 const line = require('@line/bot-sdk');
@@ -160,8 +160,14 @@ async function handleEvent(event) {
   // kawa: このあたりのロジックを活用すれば画像や音声も取り扱い可能？
   } else if (event.message.type === 'image') {
     //https://developers.line.biz/ja/reference/messaging-api/#image-message
+    
+    //Azure BlobStrageに保存するファイル名を作成する
     const blobName = uuidv4() + '.jpg'
+
+    
     const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+    
+    //LINEから受け取ったデータを　定数につめる
     const stream = await client.getMessageContent(event.message.id);
     const data = await getStreamData(stream);
     blockBlobClient.uploadData(data);
