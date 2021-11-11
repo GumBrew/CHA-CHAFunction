@@ -3,7 +3,17 @@
 //strictモード（厳格モード）に設定　エラーチェックが厳しくなるらしい
 'use strict';
 
-//kawa:定数（書き換えられたくない変数）を宣言　※CHACHA
+
+// @ts-check DB関連の設定
+//  <ImportConfiguration>
+const CosmosClient = require("@azure/cosmos").CosmosClient;
+const configDB = require("./config");
+const dbContext = require("./data/databaseContext");
+//  </ImportConfiguration>
+
+//ここまでDB関連の設定　tes
+
+//kawa:定数（書き換えられたくない変数）を宣言
 //kawa:外部モジュールを読み込む　※const 変数 = require( モジュール名 );　が構文らしい
 //kawa:LINE提供の外部モジュールを読み込む　これでLineのAPIを呼び出すことができるようになると思われる
 const line = require('@line/bot-sdk');
@@ -160,14 +170,8 @@ async function handleEvent(event) {
   // kawa: このあたりのロジックを活用すれば画像や音声も取り扱い可能？
   } else if (event.message.type === 'image') {
     //https://developers.line.biz/ja/reference/messaging-api/#image-message
-    
-    //Azure BlobStrageに保存するファイル名を作成する
     const blobName = uuidv4() + '.jpg'
-
-    
     const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-    
-    //LINEから受け取ったデータを　定数につめる
     const stream = await client.getMessageContent(event.message.id);
     const data = await getStreamData(stream);
     blockBlobClient.uploadData(data);
@@ -203,15 +207,87 @@ async function handleEvent(event) {
 
 
   // create a echoing text message
+
+  //kawa:感謝メッセージ登録ロジックを↓あたりに入れる
+
+
   //kawa:LINEからjson形式で受け取ったデータのうち、text部分をそのまま変数セット
   const echo = { type: 'text', text: event.message.text };
   // const echo2 = { type: 'text', text: event.source.userId };
-  const echo2 = { type: 'text', text: 'を登録しました' };
+  const echo2 = { type: 'text', text: 'を登録しましたtest' };
+
+
+
+
+//DBへの接続
+  // <CreateClientObjectDatabaseContainer>
+  const { endpoint, key, databaseId, containerId } = configDB;
+
+  const clientDB = new CosmosClient({ endpoint, key });
+
+  const database = clientDB.database(databaseId);
+  const container = database.container(containerId);
+
+  // Make sure Tasks database is already setup. If not, create it.
+  await dbContext.create(clientDB, databaseId, containerId);
+  // </CreateClientObjectDatabaseContainer>
+  //ここまでDBへの接続
+
+  //DBへ登録
+  //  <DefineNewItem>
+   const newItem = {
+    id: "2021/11/11 16:09",
+    category: "test",
+    time: "23:00",
+    description: "お風呂入れてくれてありがとう",
+   };
+  //  </DefineNewItem>
+    // <CreateItem>
+    /** Create new item
+     * newItem is defined at the top of this file
+     */
+     const { resource: createdItem } = await container.items.create(newItem);
+    
+     // </CreateItem>
+     //ここまでDBへの登録
+
+     //DBから取得
+    // <QueryItems>
+    console.log(`Querying container: Items`);
+
+    // query to return all items
+    const querySpec = {
+      query: "SELECT * from c"
+    };
+    
+    // read all items in the Items container
+    const { resources: items } = await container.items
+      .query(querySpec)
+      .fetchAll();
+
+    let getitems = "";
+    items.forEach(item => {
+      console.log(`${item.id} - ${item.description}`);
+      getitems =  getitems+item.description+",";
+    });
+
+  // create a echoing text message
+   const echo3 = { type: 'text', text: getitems};
+
+　 const getaitemsAry = getitems.split(',')
+
+　 const kansya1 = { type: 'text', text: getaitemsAry[0]};
+
+   const kansya2 = { type: 'text', text: getaitemsAry[1]};
+
+   const kansya3 = { type: 'text', text: getaitemsAry[2]};
+
+   const kansya4 = { type: 'text', text: getaitemsAry[3]};
 
 
   // use reply API
-  //kawa:応答メッセージを送る　仕様上受け取った応答トークンをそのままリクエストボディに詰めて返却する必要。
-  return client.replyMessage(event.replyToken, [echo , echo2]);
+  //kawa:登録完了したことを伝える応答メッセージを送る　仕様上受け取った応答トークンをそのままリクエストボディに詰めて返却する必要。
+  return client.replyMessage(event.replyToken, [kansya1 , kansya2 , kansya3 , kansya4]);
 }
 
 module.exports = createHandler(app);
