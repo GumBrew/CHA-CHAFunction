@@ -21,7 +21,7 @@ const line = require('@line/bot-sdk');
 //kawa:その他いろいろな外部モジュールを読み込み
 const createHandler = require("azure-function-express").createHandler;
 const express = require('express');
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4, stringify } = require('uuid');
 const { BlobServiceClient } = require("@azure/storage-blob");
 const { getStreamData } = require('./helpers/stream.js'); 
 
@@ -45,13 +45,13 @@ const config = {
 
 //kawa: Bさん用の情報
 //kawa:BさんのuserIdを定義
-const userId2 = 'U5e7442aa88d9ad061a14761447955f78';
+const userId2 = 'U8e9503aef9658fc982742dcc26307726';
 const config2 = {
   //Bさん用のLINEのチャネルアクセストークンとシークレットを↓の""に記入
   //channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
-  channelAccessToken: "Yko44X8qrMuYUTTxy3cBisv3AmDAtsK+HuMriKEuX2U40EOnbHZRY2iWyEp8IY5Rlcjt+Xnz7HFou5waZ5Hq3duS1e9938pM5RMHJQ04jWLBaY3TtBDQCkprW8G3vuEFaLsHKejvPeRHknpETPnFCAdB04t89/1O/w1cDnyilFU=",
+  channelAccessToken: "0EVfbmMFQtLTD8qYvqCy4OEs+6MfbCBpjMZ9cuWqny23SdPGiu23kN2R5oK6Gq47rRDSUeZDBQouisJ2vyOqV/7uLZcMTl3OScBffj6cqUtVDHDPnt8ICvkqBcJqGrUha/pgtjD9o9jFVF/khobXpQdB04t89/1O/w1cDnyilFU=",
   //channelSecret: process.env.CHANNEL_SECRET,
-  channelSecret: "46d397205dcc0f1abc9837bc6f939954",
+  channelSecret: "95d6fd61f4b9e5e8aca2021b3997d0da",
 };
 
 // create LINE SDK client
@@ -110,16 +110,174 @@ async function handleEvent(event) {
         text: '2021/10/13 美味しいご飯を作ってくれてありがとう'
       };
 
+      //DBへの接続
+      // <CreateClientObjectDatabaseContainer>
+      const { endpoint, key, databaseId, containerId } = configDB;
+
+      const clientDB = new CosmosClient({ endpoint, key });
+
+      const database = clientDB.database(databaseId);
+      const container = database.container(containerId);
+
+      // Make sure Tasks database is already setup. If not, create it.
+      await dbContext.create(clientDB, databaseId, containerId);
+      // </CreateClientObjectDatabaseContainer>
+      //ここまでDBへの接続
+
+      //DBから取得
+      // <QueryItems>
+      console.log(`Querying container: Items`);
+
+      // query to return all items
+      const querySpec = {
+        query: "SELECT * from c"
+      };
+    
+      // read all items in the Items container
+      const { resources: items } = await container.items
+        .query(querySpec)
+        .fetchAll();
+
+      let getitems = "";
+      items.forEach(item => {
+        console.log(`${item.id} - ${item.description}`);
+        getitems =  getitems+item.description+",";
+      });
+
+     // create a echoing text message
+      const echo3 = { type: 'text', text: getitems};
+
+　    const getaitemsAry = getitems.split(',')
+      const hairetukazu = getaitemsAry.length;
+
+      const kansyatext = getaitemsAry[getaitemsAry.length -2 ];
+
+　    const kansya1 = { type: 'text', text: getaitemsAry[getaitemsAry.length -8 ]};
+
+      const kansya2 = { type: 'text', text: getaitemsAry[getaitemsAry.length -7 ]};
+
+      const kansya3 = { type: 'text', text: getaitemsAry[getaitemsAry.length -6 ]};
+
+      const kansya4 = { type: 'text', text: getaitemsAry[getaitemsAry.length -5 ]};
+   
+      const kansya5 = { type: 'text', text: getaitemsAry[getaitemsAry.length -4 ]};
+
+      const kansya6 = { type: 'text', text: getaitemsAry[getaitemsAry.length -3 ]};
+      
+      const kansya7 = { type: 'text', text: getaitemsAry[getaitemsAry.length -2 ]};
+
+      const kansyagazou = {
+        type: 'image',
+        originalContentUrl: `https://fnstor9mnqdxuwshf7x5jrpw.blob.core.windows.net/files/aed41e6f-c810-4ebe-80ce-01886f2cf93d.jpg`,
+        previewImageUrl: `https://fnstor9mnqdxuwshf7x5jrpw.blob.core.windows.net/files/aed41e6f-c810-4ebe-80ce-01886f2cf93d.jpg`
+      };
+  
+      const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      await _sleep(3000);
+ 
+
+
+
       
       // kawa: Bさんに感謝メッセージをプッシュ
-      client2.pushMessage(userId2, pushmessage1)
+      client2.pushMessage(userId2, kansya1)
       .then(() => {
         console.log('push!')
       })
       .catch((err) => {
         // error handling
     　});
-      
+
+
+    await _sleep(3000);
+
+
+      // kawa: Bさんに感謝メッセージをプッシュ
+      client2.pushMessage(userId2, kansya2)
+      .then(() => {
+        console.log('push!')
+      })
+      .catch((err) => {
+        // error handling
+    　});
+
+    await _sleep(3500);
+
+
+      // kawa: Bさんに感謝メッセージをプッシュ
+      client2.pushMessage(userId2, kansya3)
+          .then(() => {
+            console.log('push!')
+          })
+          .catch((err) => {
+            // error handling
+        　});
+
+        await _sleep(3500);
+
+
+           // kawa: Bさんに感謝メッセージをプッシュ
+           client2.pushMessage(userId2, kansya4)
+           .then(() => {
+             console.log('push!')
+           })
+           .catch((err) => {
+             // error handling
+         　});
+
+         await _sleep(3500);
+
+         
+               // kawa: Bさんに感謝メッセージをプッシュ
+      client2.pushMessage(userId2, kansya5)
+      .then(() => {
+        console.log('push!')
+      })
+      .catch((err) => {
+        // error handling
+    　});
+
+    await _sleep(3500);
+
+
+                   // kawa: Bさんに感謝画像をプッシュ
+                   client2.pushMessage(userId2, kansyagazou)
+                   .then(() => {
+                     console.log('push!')
+                   })
+                   .catch((err) => {
+                     // error handling
+                 　});
+
+
+         await _sleep(3500);
+
+
+         
+         
+    // kawa: Bさんに感謝メッセージをプッシュ
+   client2.pushMessage(userId2, kansya6)
+   .then(() => {
+   console.log('push!')
+   })
+   .catch((err) => {
+   // error handling
+　  });
+
+//await _sleep(3500);
+         
+   // kawa: Bさんに感謝メッセージをプッシュ
+  // client2.pushMessage(userId2, kansya7)
+   //.then(() => {
+  //console.log('push!')
+  //})
+  //.catch((err) => {
+  // error handling
+　//  });
+
+
+
 
       // kawa: Aさん用のリプライメッセージを定義
       var returnmessage1 = {
@@ -179,7 +337,15 @@ async function handleEvent(event) {
       type: 'image',
       originalContentUrl: `https://${blobServiceClient.accountName}.blob.core.windows.net/files/${blobName}`,
       previewImageUrl: `https://${blobServiceClient.accountName}.blob.core.windows.net/files/${blobName}`
+      , type: 'text' , text: blobName
     });
+
+    //  return client.replyMessage(event.replyToken,{
+  //    type: 'image',
+  //    originalContentUrl: `https://${blobServiceClient.accountName}.blob.core.windows.net/files/${blobName}`,
+  //    previewImageUrl: `https://${blobServiceClient.accountName}.blob.core.windows.net/files/${blobName}`
+  //    , type: 'text' , text: blobName
+  //  });
   } else if (event.message.type === 'audio') {
     //https://developers.line.biz/ja/reference/messaging-api/#audio-message
     //durationはこれでとれそう？ > https://www.npmjs.com/package/mp3-duration
@@ -213,8 +379,8 @@ async function handleEvent(event) {
 
   //kawa:LINEからjson形式で受け取ったデータのうち、text部分をそのまま変数セット
   const echo = { type: 'text', text: event.message.text };
-  // const echo2 = { type: 'text', text: event.source.userId };
-  const echo2 = { type: 'text', text: 'を登録しましたtest' };
+  const echo5 = { type: 'text', text: event.source.userId };
+  const echo2 = { type: 'text', text: 'を登録しました' };
 
 
 
@@ -233,14 +399,36 @@ async function handleEvent(event) {
   // </CreateClientObjectDatabaseContainer>
   //ここまでDBへの接続
 
+ //乱数で主キー設定
+  　var min = 5 ;
+  　var max = 99999999 ;
+ 
+  　　var a = Math.floor( Math.random() * (max + 1 - min) ) + min ;
+  　  var s = String(a);
+
+  //const textmessage = "あいうえお" ;
+
+  //日付定義
+  var now = new Date();
+  
+  var Year = now.getFullYear();
+  var Month = now.getMonth()+1;
+  const Day = now.getDate();
+  var Hour = now.getHours();
+  var Min = now.getMinutes();
+  //  var Sec = now.getSeconds();
+
+  //  var yyyymmddhhmm = Year + "年" + Month + "月" + Date + "日";
+    //var yyyymmddhhmm = Year + "年" + Month + "月" + Date + "日" + Hour + ":" + Min + ":" + Sec;
+
   //DBへ登録
+  var newItem = {};
   //  <DefineNewItem>
-   const newItem = {
-    id: "2021/11/11 16:09",
-    category: "test",
-    time: "23:00",
-    description: "お風呂入れてくれてありがとう",
-   };
+  newItem.id = s;
+  newItem.category = "text";
+  //newItem.time = Year + "年" + Month + "月" + Day + "日" + Hour + ":" + Min;
+  newItem.time = new Date().toLocaleString({ timeZone: 'Asia/Tokyo' });
+  newItem.description = event.message.text;
   //  </DefineNewItem>
     // <CreateItem>
     /** Create new item
@@ -275,6 +463,9 @@ async function handleEvent(event) {
    const echo3 = { type: 'text', text: getitems};
 
 　 const getaitemsAry = getitems.split(',')
+   const hairetukazu = getaitemsAry.length;
+
+   const kansyatext = getaitemsAry[getaitemsAry.length -2 ];
 
 　 const kansya1 = { type: 'text', text: getaitemsAry[0]};
 
@@ -282,12 +473,18 @@ async function handleEvent(event) {
 
    const kansya3 = { type: 'text', text: getaitemsAry[2]};
 
-   const kansya4 = { type: 'text', text: getaitemsAry[3]};
+   const kansya4 = { type: 'text', text: getaitemsAry[getaitemsAry.length -2 ]};
+
+//   const kansya4 = { type: 'text', text: getaitemsAry[getaitemsAry.length-1]};
+
+ //  const kansya4 = { type: 'text', text: getaitemsAry.slice(-1)[0]};
+
+   //const kansya4 = { type: 'text', text: ransuu};
 
 
   // use reply API
   //kawa:登録完了したことを伝える応答メッセージを送る　仕様上受け取った応答トークンをそのままリクエストボディに詰めて返却する必要。
-  return client.replyMessage(event.replyToken, [kansya1 , kansya2 , kansya3 , kansya4]);
+  return client.replyMessage(event.replyToken, [echo , echo2]);
 }
 
 module.exports = createHandler(app);
