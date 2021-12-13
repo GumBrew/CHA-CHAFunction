@@ -119,7 +119,7 @@ async function handleEvent(event) {
 
       // kawa: Aさんにリプライメッセージ
       return client.replyMessage(event.replyToken, returnmessage1);
-            
+    
 
     } else if (event.message.text === 'quick') {
       //https://developers.line.biz/ja/reference/messaging-api/#quick-reply
@@ -155,7 +155,21 @@ async function handleEvent(event) {
           ]
         }
       });
+   
+      
+    } else if (event.message.text === 'aaaa') {
+
+     // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
+      var returnmessage1 = {
+      type: 'text',
+      text: '2021/10/13 美味しいご飯を作ってくれてありがとう'
+      };
+ 
+    // kawa: Aさんにリプライメッセージ
+    return client.replyMessage(event.replyToken, returnmessage1);
     }
+
+
 
   // kawa: このあたりのロジックを活用すれば画像や音声も取り扱い可能？
   } else if (event.message.type === 'image') {
