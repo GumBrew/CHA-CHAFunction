@@ -3,16 +3,6 @@
 //strictモード（厳格モード）に設定　エラーチェックが厳しくなるらしい
 'use strict';
 
-
-// @ts-check DB関連の設定
-//  <ImportConfiguration>
-const CosmosClient = require("@azure/cosmos").CosmosClient;
-const configDB = require("./config");
-const dbContext = require("./data/databaseContext");
-//  </ImportConfiguration>
-
-//ここまでDB関連の設定　tes
-
 //kawa:定数（書き換えられたくない変数）を宣言
 //kawa:外部モジュールを読み込む　※const 変数 = require( モジュール名 );　が構文らしい
 //kawa:LINE提供の外部モジュールを読み込む　これでLineのAPIを呼び出すことができるようになると思われる
@@ -21,7 +11,7 @@ const line = require('@line/bot-sdk');
 //kawa:その他いろいろな外部モジュールを読み込み
 const createHandler = require("azure-function-express").createHandler;
 const express = require('express');
-const { v4: uuidv4, stringify } = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const { BlobServiceClient } = require("@azure/storage-blob");
 const { getStreamData } = require('./helpers/stream.js'); 
 
@@ -53,7 +43,6 @@ const config2 = {
   //channelSecret: process.env.CHANNEL_SECRET,
   channelSecret: "46d397205dcc0f1abc9837bc6f939954",
 };
-
 
 // create LINE SDK client
 // kawa:Aさん用LINEBOT用LINEオブジェクトを生成
@@ -111,174 +100,16 @@ async function handleEvent(event) {
         text: '2021/10/13 美味しいご飯を作ってくれてありがとう'
       };
 
-      //DBへの接続
-      // <CreateClientObjectDatabaseContainer>
-      const { endpoint, key, databaseId, containerId } = configDB;
-
-      const clientDB = new CosmosClient({ endpoint, key });
-
-      const database = clientDB.database(databaseId);
-      const container = database.container(containerId);
-
-      // Make sure Tasks database is already setup. If not, create it.
-      await dbContext.create(clientDB, databaseId, containerId);
-      // </CreateClientObjectDatabaseContainer>
-      //ここまでDBへの接続
-
-      //DBから取得
-      // <QueryItems>
-      console.log(`Querying container: Items`);
-
-      // query to return all items
-      const querySpec = {
-        query: "SELECT * from c"
-      };
-    
-      // read all items in the Items container
-      const { resources: items } = await container.items
-        .query(querySpec)
-        .fetchAll();
-
-      let getitems = "";
-      items.forEach(item => {
-        console.log(`${item.id} - ${item.description}`);
-        getitems =  getitems+item.description+",";
-      });
-
-     // create a echoing text message
-      const echo3 = { type: 'text', text: getitems};
-
-　    const getaitemsAry = getitems.split(',')
-      const hairetukazu = getaitemsAry.length;
-
-      const kansyatext = getaitemsAry[getaitemsAry.length -2 ];
-
-　    const kansya1 = { type: 'text', text: getaitemsAry[getaitemsAry.length -8 ]};
-
-      const kansya2 = { type: 'text', text: getaitemsAry[getaitemsAry.length -7 ]};
-
-      const kansya3 = { type: 'text', text: getaitemsAry[getaitemsAry.length -6 ]};
-
-      const kansya4 = { type: 'text', text: getaitemsAry[getaitemsAry.length -5 ]};
-   
-      const kansya5 = { type: 'text', text: getaitemsAry[getaitemsAry.length -4 ]};
-
-      const kansya6 = { type: 'text', text: getaitemsAry[getaitemsAry.length -3 ]};
-      
-      const kansya7 = { type: 'text', text: getaitemsAry[getaitemsAry.length -2 ]};
-
-      const kansyagazou = {
-        type: 'image',
-        originalContentUrl: `https://fnstor9mnqdxuwshf7x5jrpw.blob.core.windows.net/files/aed41e6f-c810-4ebe-80ce-01886f2cf93d.jpg`,
-        previewImageUrl: `https://fnstor9mnqdxuwshf7x5jrpw.blob.core.windows.net/files/aed41e6f-c810-4ebe-80ce-01886f2cf93d.jpg`
-      };
-  
-      const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-      await _sleep(3000);
- 
-
-
-
       
       // kawa: Bさんに感謝メッセージをプッシュ
-      client2.pushMessage(userId2, kansya1)
+      client2.pushMessage(userId2, pushmessage1)
       .then(() => {
         console.log('push!')
       })
       .catch((err) => {
         // error handling
     　});
-
-
-    await _sleep(3000);
-
-
-      // kawa: Bさんに感謝メッセージをプッシュ
-      client2.pushMessage(userId2, kansya2)
-      .then(() => {
-        console.log('push!')
-      })
-      .catch((err) => {
-        // error handling
-    　});
-
-    await _sleep(3500);
-
-
-      // kawa: Bさんに感謝メッセージをプッシュ
-      client2.pushMessage(userId2, kansya3)
-          .then(() => {
-            console.log('push!')
-          })
-          .catch((err) => {
-            // error handling
-        　});
-
-        await _sleep(3500);
-
-
-           // kawa: Bさんに感謝メッセージをプッシュ
-           client2.pushMessage(userId2, kansya4)
-           .then(() => {
-             console.log('push!')
-           })
-           .catch((err) => {
-             // error handling
-         　});
-
-         await _sleep(3500);
-
-         
-               // kawa: Bさんに感謝メッセージをプッシュ
-      client2.pushMessage(userId2, kansya5)
-      .then(() => {
-        console.log('push!')
-      })
-      .catch((err) => {
-        // error handling
-    　});
-
-    await _sleep(3500);
-
-
-                   // kawa: Bさんに感謝画像をプッシュ
-                   client2.pushMessage(userId2, kansyagazou)
-                   .then(() => {
-                     console.log('push!')
-                   })
-                   .catch((err) => {
-                     // error handling
-                 　});
-
-
-         await _sleep(3500);
-
-
-         
-         
-    // kawa: Bさんに感謝メッセージをプッシュ
-   client2.pushMessage(userId2, kansya6)
-   .then(() => {
-   console.log('push!')
-   })
-   .catch((err) => {
-   // error handling
-　  });
-
-//await _sleep(3500);
-         
-   // kawa: Bさんに感謝メッセージをプッシュ
-  // client2.pushMessage(userId2, kansya7)
-   //.then(() => {
-  //console.log('push!')
-  //})
-  //.catch((err) => {
-  // error handling
-　//  });
-
-
-
+      
 
       // kawa: Aさん用のリプライメッセージを定義
       var returnmessage1 = {
@@ -338,15 +169,7 @@ async function handleEvent(event) {
       type: 'image',
       originalContentUrl: `https://${blobServiceClient.accountName}.blob.core.windows.net/files/${blobName}`,
       previewImageUrl: `https://${blobServiceClient.accountName}.blob.core.windows.net/files/${blobName}`
-      , type: 'text' , text: blobName
     });
-
-    //  return client.replyMessage(event.replyToken,{
-  //    type: 'image',
-  //    originalContentUrl: `https://${blobServiceClient.accountName}.blob.core.windows.net/files/${blobName}`,
-  //    previewImageUrl: `https://${blobServiceClient.accountName}.blob.core.windows.net/files/${blobName}`
-  //    , type: 'text' , text: blobName
-  //  });
   } else if (event.message.type === 'audio') {
     //https://developers.line.biz/ja/reference/messaging-api/#audio-message
     //durationはこれでとれそう？ > https://www.npmjs.com/package/mp3-duration
@@ -380,107 +203,8 @@ async function handleEvent(event) {
 
   //kawa:LINEからjson形式で受け取ったデータのうち、text部分をそのまま変数セット
   const echo = { type: 'text', text: event.message.text };
-  const echo5 = { type: 'text', text: event.source.userId };
+  // const echo2 = { type: 'text', text: event.source.userId };
   const echo2 = { type: 'text', text: 'を登録しました' };
-
-
-
-
-//DBへの接続
-  // <CreateClientObjectDatabaseContainer>
-  const { endpoint, key, databaseId, containerId } = configDB;
-
-  const clientDB = new CosmosClient({ endpoint, key });
-
-  const database = clientDB.database(databaseId);
-  const container = database.container(containerId);
-
-  // Make sure Tasks database is already setup. If not, create it.
-  await dbContext.create(clientDB, databaseId, containerId);
-  // </CreateClientObjectDatabaseContainer>
-  //ここまでDBへの接続
-
- //乱数で主キー設定
-  　var min = 5 ;
-  　var max = 99999999 ;
- 
-  　　var a = Math.floor( Math.random() * (max + 1 - min) ) + min ;
-  　  var s = String(a);
-
-  //const textmessage = "あいうえお" ;
-
-  //日付定義
-  var now = new Date();
-  
-  var Year = now.getFullYear();
-  var Month = now.getMonth()+1;
-  const Day = now.getDate();
-  var Hour = now.getHours();
-  var Min = now.getMinutes();
-  //  var Sec = now.getSeconds();
-
-  //  var yyyymmddhhmm = Year + "年" + Month + "月" + Date + "日";
-    //var yyyymmddhhmm = Year + "年" + Month + "月" + Date + "日" + Hour + ":" + Min + ":" + Sec;
-
-  //DBへ登録
-  var newItem = {};
-  //  <DefineNewItem>
-  newItem.id = s;
-  newItem.category = "text";
-  //newItem.time = Year + "年" + Month + "月" + Day + "日" + Hour + ":" + Min;
-  newItem.time = new Date().toLocaleString({ timeZone: 'Asia/Tokyo' });
-  newItem.description = event.message.text;
-  //  </DefineNewItem>
-    // <CreateItem>
-    /** Create new item
-     * newItem is defined at the top of this file
-     */
-     const { resource: createdItem } = await container.items.create(newItem);
-    
-     // </CreateItem>
-     //ここまでDBへの登録
-
-     //DBから取得
-    // <QueryItems>
-    console.log(`Querying container: Items`);
-
-    // query to return all items
-    const querySpec = {
-      query: "SELECT * from c"
-    };
-    
-    // read all items in the Items container
-    const { resources: items } = await container.items
-      .query(querySpec)
-      .fetchAll();
-
-    let getitems = "";
-    items.forEach(item => {
-      console.log(`${item.id} - ${item.description}`);
-      getitems =  getitems+item.description+",";
-    });
-
-  // create a echoing text message
-   const echo3 = { type: 'text', text: getitems};
-
-　 const getaitemsAry = getitems.split(',')
-   const hairetukazu = getaitemsAry.length;
-
-   const kansyatext = getaitemsAry[getaitemsAry.length -2 ];
-
-　 const kansya1 = { type: 'text', text: getaitemsAry[0]};
-
-   const kansya2 = { type: 'text', text: getaitemsAry[1]};
-
-   const kansya3 = { type: 'text', text: getaitemsAry[2]};
-
-   const kansya4 = { type: 'text', text: getaitemsAry[getaitemsAry.length -2 ]};
-
-//   const kansya4 = { type: 'text', text: getaitemsAry[getaitemsAry.length-1]};
-
- //  const kansya4 = { type: 'text', text: getaitemsAry.slice(-1)[0]};
-
-   //const kansya4 = { type: 'text', text: ransuu};
 
 
   // use reply API
