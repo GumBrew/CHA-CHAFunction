@@ -169,6 +169,51 @@ async function handleEvent(event) {
     return client.replyMessage(event.replyToken, returnmessage1);
     }
 
+  
+  } else if (event.message.text === '川上さんの結婚記念日を教えて') {
+
+    // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
+     var returnmessage1 = {
+     type: 'text',
+     text: 'みみの日（3月3日）'
+     };
+
+   // kawa: Aさんにリプライメッセージ
+   return client.replyMessage(event.replyToken, returnmessage1);
+   }
+
+  
+  } else if (event.message.text === '赤田さんの昔の異名を教えて') {
+
+    // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
+     var returnmessage1 = {
+     type: 'text',
+     text: 'ジャックナイフ！'
+     };
+
+   // kawa: Aさんにリプライメッセージ
+   return client.replyMessage(event.replyToken, returnmessage1);
+   }
+
+  
+  } else if (event.message.text === '池田さんの飲み会の行動を教えて') {
+
+    // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
+     var returnmessage1 = {
+     type: 'text',
+     text: '風にあたりに外に行きがち'
+     };
+
+   // kawa: Aさんにリプライメッセージ
+   return client.replyMessage(event.replyToken, returnmessage1);
+   }
+
+
+
+
+
+
+
 
 
   // kawa: このあたりのロジックを活用すれば画像や音声も取り扱い可能？
