@@ -157,12 +157,12 @@ async function handleEvent(event) {
       });
    
       
-    } else if (event.message.text === 'aaaa') {
+    } else if (event.message.text === '長嶋さんが今住んでいるアパートは住み始めて何年か教えて') {
 
      // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
       var returnmessage1 = {
       type: 'text',
-      text: '2021/10/13 美味しいご飯を作ってくれてありがとう'
+      text: '約四半期'
       };
  
     // kawa: Aさんにリプライメッセージ
