@@ -167,45 +167,45 @@ async function handleEvent(event) {
  
     // kawa: Aさんにリプライメッセージ
     return client.replyMessage(event.replyToken, returnmessage1);
-    }
+    
 
   
   } else if (event.message.text === '川上さんの結婚記念日を教えて') {
 
     // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
-     var returnmessage1 = {
+     var returnmessage2 = {
      type: 'text',
      text: 'みみの日（3月3日）'
      };
 
    // kawa: Aさんにリプライメッセージ
-   return client.replyMessage(event.replyToken, returnmessage1);
-   }
+   return client.replyMessage(event.replyToken, returnmessage2);
+   
 
   
   } else if (event.message.text === '赤田さんの昔の異名を教えて') {
 
     // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
-     var returnmessage1 = {
+     var returnmessage3 = {
      type: 'text',
      text: 'ジャックナイフ！'
      };
 
    // kawa: Aさんにリプライメッセージ
-   return client.replyMessage(event.replyToken, returnmessage1);
-   }
+   return client.replyMessage(event.replyToken, returnmessage3);
+   
 
   
   } else if (event.message.text === '池田さんの飲み会の行動を教えて') {
 
     // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
-     var returnmessage1 = {
+     var returnmessage4 = {
      type: 'text',
      text: '風にあたりに外に行きがち'
      };
 
    // kawa: Aさんにリプライメッセージ
-   return client.replyMessage(event.replyToken, returnmessage1);
+   return client.replyMessage(event.replyToken, returnmessage4);
    }
 
 
