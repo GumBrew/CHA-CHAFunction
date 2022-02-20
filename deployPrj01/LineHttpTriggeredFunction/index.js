@@ -198,14 +198,22 @@ async function handleEvent(event) {
   
   } else if (event.message.text === '池田さんの飲み会の行動を教えて') {
 
+    const kansyagazou = {
+      type: 'image',
+      originalContentUrl: `https://fnstorae3voja6qwaanh0a6d.blob.core.windows.net/files/9c257e3f-30e1-468b-9b22-a7ef26123c43.jpg`,
+      previewImageUrl: `https://fnstorae3voja6qwaanh0a6d.blob.core.windows.net/files/9c257e3f-30e1-468b-9b22-a7ef26123c43.jpg`
+    };
+
+
+
     // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
-     var returnmessage4 = {
-     type: 'text',
-     text: '風にあたりに外に行きがち'
-     };
+    // var returnmessage4 = {
+    // type: 'text',
+    // text: '風にあたりに外に行きがち'
+    // };
 
    // kawa: Aさんにリプライメッセージ
-   return client.replyMessage(event.replyToken, returnmessage4);
+   //　return client.replyMessage(event.replyToken, returnmessage4);
    }
 
 
