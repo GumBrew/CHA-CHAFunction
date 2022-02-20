@@ -28,9 +28,9 @@ const userId = 'U0af4573ec27255b17b7125f3bfbb5bfe';
 const config = {
   //Aさん用のLINEのチャネルアクセストークンとシークレットを↓の""に記入
   //channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
-  channelAccessToken: "hThpghYG8Xy5GkaieXB7K9tueXXKuSgw8eV7ryx4hP7BZqcSZL46nX0Q0+ewES83RwO8bFycwyiNZtdFdJrdKYQwojKS8UPAz88szHx/v57ZNocjjj10xzHKjWg/lzIA/XXUlqKU0Sas3497v1L6ZQdB04t89/1O/w1cDnyilFU=",
+  channelAccessToken: "HWSDtcb2DRlZ0s0npp0lQPyeYyY40c9L0p7SA99I4kQZZd/Cdn9ZaI2sHnFknYKWj1nh1lDLqSV7IDQGscQzp7II7DMApcDGSK69VUS6UrkkjynSkuTdq1gJ6GGC8jLyiKLpfWnOd6zTHgwWl73N/QdB04t89/1O/w1cDnyilFU=",
   //channelSecret: process.env.CHANNEL_SECRET,
-  channelSecret: "921b61dce5627ded8971ce62b64ca904",
+  channelSecret: "6bdb90fa4a35738e683d42977f08cfb2",
 };
 
 //kawa: Bさん用の情報
