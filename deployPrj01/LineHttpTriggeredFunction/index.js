@@ -205,7 +205,7 @@ async function handleEvent(event) {
     };
 
     // kawa: Bさんに感謝画像をプッシュ
-    client.pushMessage(userId, kansyagazoukare)
+    client.pushMessage(userId, kansyagazou)
     .then(() => {
       console.log('push!')
     })
