@@ -61,7 +61,7 @@ const app = express();
 // about the middleware, please refer to doc
 app.post('/api/linehttptriggeredfunction', line.middleware(config), (req, res) => {
   Promise
-  //kawa:handleEvent関数が呼ばれたら結果（result）をjson形式で（LINEに）返却　ってこと？
+  //kawa:handleEvent関数が呼ばれたら結果（result）をjson形式で（LINEに）返却　
     .all(req.body.events.map(handleEvent))
     .then((result) => res.json(result))
     .catch((err) => {
