@@ -160,11 +160,11 @@ async function handleEvent(event) {
       
     } else if (event.message.text === '長嶋さんが今住んでいるアパートは住み始めて何年か教えて') {
 
-      await _sleep(2000);
+      await _sleep(1000);
      // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
       var returnmessage1 = {
       type: 'text',
-      text: '約四半期'
+      text: '約四半期。経年劣化に伴い家賃は年々減額。ただアパートの治安も悪化中'
       };
  
     // kawa: Aさんにリプライメッセージ
@@ -174,7 +174,7 @@ async function handleEvent(event) {
   
   } else if (event.message.text === '川上さんの結婚記念日を教えて') {
 
-    await _sleep(2000);
+    await _sleep(1000);
     // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
      var returnmessage2 = {
      type: 'text',
@@ -188,12 +188,12 @@ async function handleEvent(event) {
   
   } else if (event.message.text === '赤田さんの昔の異名を教えて') {
 
-    await _sleep(2000);
+    await _sleep(1000);
 
     // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
      var returnmessage3 = {
      type: 'text',
-     text: 'ジャックナイフ！'
+     text: 'ジャックナイフ！ '
      };
 
    // kawa: Aさんにリプライメッセージ
@@ -201,7 +201,7 @@ async function handleEvent(event) {
    
 
   
-  } else if (event.message.text === '池田さんの飲み会の行動を教えて') {
+  } else if (event.message.text === '中川さんの晴れ舞台がみたい') {
 
     const kansyagazou = {
       type: 'image',
@@ -217,11 +217,11 @@ async function handleEvent(event) {
     .catch((err) => {
       // error handling
   　});
-  await _sleep(4000);
+  await _sleep(1000);
     // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
      var returnmessage4 = {
      type: 'text',
-     text: '晴れ舞台'
+     text: 'ほれ'
      };
 
    // kawa: Aさんにリプライメッセージ
