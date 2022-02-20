@@ -209,6 +209,7 @@ async function handleEvent(event) {
       previewImageUrl: `https://fnstorae3voja6qwaanh0a6d.blob.core.windows.net/files/9c257e3f-30e1-468b-9b22-a7ef26123c43.jpg`
     };
 
+    await _sleep(1000);
     // kawa: Bさんに感謝画像をプッシュ
     client.pushMessage(userId, kansyagazou)
     .then(() => {
@@ -217,7 +218,7 @@ async function handleEvent(event) {
     .catch((err) => {
       // error handling
   　});
-  await _sleep(1000);
+
     // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
      var returnmessage4 = {
      type: 'text',
