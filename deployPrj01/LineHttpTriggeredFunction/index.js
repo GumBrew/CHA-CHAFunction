@@ -24,7 +24,7 @@ const containerClient = blobServiceClient.getContainerClient('files');
 
 //kawa: Aさん用の情報
 //kawa:AさんのuserIdを定義
-const userId = 'U0af4573ec27255b17b7125f3bfbb5bfe';
+const userId = 'Uf8f92601be780d0a793e47657de345a5';
 const config = {
   //Aさん用のLINEのチャネルアクセストークンとシークレットを↓の""に記入
   //channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
@@ -51,6 +51,7 @@ const client = new line.Client(config);
 // kawa:Bさん用LINEBOT用LINEオブジェクトを生成
 const client2 = new line.Client(config2);
 
+const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // create Express app
 // about Express itself: https://expressjs.com/
@@ -159,6 +160,7 @@ async function handleEvent(event) {
       
     } else if (event.message.text === '長嶋さんが今住んでいるアパートは住み始めて何年か教えて') {
 
+      await _sleep(2000);
      // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
       var returnmessage1 = {
       type: 'text',
@@ -172,6 +174,7 @@ async function handleEvent(event) {
   
   } else if (event.message.text === '川上さんの結婚記念日を教えて') {
 
+    await _sleep(2000);
     // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
      var returnmessage2 = {
      type: 'text',
@@ -184,6 +187,8 @@ async function handleEvent(event) {
 
   
   } else if (event.message.text === '赤田さんの昔の異名を教えて') {
+
+    await _sleep(2000);
 
     // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
      var returnmessage3 = {
@@ -212,11 +217,11 @@ async function handleEvent(event) {
     .catch((err) => {
       // error handling
   　});
-
+  await _sleep(4000);
     // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
      var returnmessage4 = {
      type: 'text',
-     text: '写真'
+     text: '晴れ舞台'
      };
 
    // kawa: Aさんにリプライメッセージ
@@ -277,8 +282,8 @@ async function handleEvent(event) {
 
   //kawa:LINEからjson形式で受け取ったデータのうち、text部分をそのまま変数セット
   const echo = { type: 'text', text: event.message.text };
-  // const echo2 = { type: 'text', text: event.source.userId };
-  const echo2 = { type: 'text', text: 'を登録しました' };
+  const echo2 = { type: 'text', text: event.source.userId };
+  //const echo2 = { type: 'text', text: 'を登録しました' };
 
 
   // use reply API
