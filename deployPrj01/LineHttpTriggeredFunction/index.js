@@ -204,16 +204,23 @@ async function handleEvent(event) {
       previewImageUrl: `https://fnstorae3voja6qwaanh0a6d.blob.core.windows.net/files/9c257e3f-30e1-468b-9b22-a7ef26123c43.jpg`
     };
 
-
+    // kawa: Bさんに感謝画像をプッシュ
+    client.pushMessage(userId, kansyagazoukare)
+    .then(() => {
+      console.log('push!')
+    })
+    .catch((err) => {
+      // error handling
+  　});
 
     // kawa: 仮の感謝メッセージ（DBから取得するロジックに変更が必要）
-    // var returnmessage4 = {
-    // type: 'text',
-    // text: '風にあたりに外に行きがち'
-    // };
+     var returnmessage4 = {
+     type: 'text',
+     text: '写真'
+     };
 
    // kawa: Aさんにリプライメッセージ
-   //　return client.replyMessage(event.replyToken, returnmessage4);
+   　return client.replyMessage(event.replyToken, returnmessage4);
    }
 
 
